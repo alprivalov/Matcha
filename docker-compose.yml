@@ -1,0 +1,78 @@
+version: '3.5'
+
+services:
+  # api:
+  #   container_name: api
+  #   build: ./api
+  #   depends_on:
+  #     - postgres 
+  #   env_file:
+  #     - .env
+  #   ports:
+  #     - "3000:3000"
+  #   networks:
+  #     - my_network
+  #   restart: always
+  #   volumes:
+  #     - ./api:/usr/src/app
+  #     - /usr/src/app/node_modules
+
+  # postgres:
+  #   container_name: postgres
+  #   image:  postgres:10.5
+  #   ports:
+  #     - "5432:5432" 
+  #   env_file:
+  #     - .env
+  #   volumes: 
+  #     - postgres:/var/lib/postgresql/data
+  #   networks:
+  #     - my_network
+  #   restart: always
+
+  # adminer:
+  #   container_name: adminer
+  #   image: adminer
+  #   restart: always
+  #   ports:
+  #     - 8080:8080
+  #   networks:
+  #     - my_network
+
+  front:
+    container_name: front
+    build: ./front
+    # depends_on:
+      # - api 
+    networks:
+      - my_network
+    ports:
+      - 8080:80
+    restart: always
+    volumes:
+      - ./front:/usr/src/app
+      - /usr/src/app/node_modules
+
+
+  # nginx:
+  #   container_name: nginx
+  #   build: ./nginx
+  #   # depends_on:
+  #     # - api 
+  #   networks:
+  #     - my_network
+  #   ports:
+  #     - 8080:80
+  #   restart: always
+  #   volumes:
+  #     - ./nginx:/usr/src/app
+  #     - /usr/src/app/node_modules
+
+
+volumes:
+  postgres:
+    driver: local
+
+networks:
+  my_network:
+    name: my_network
