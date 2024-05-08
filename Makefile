@@ -1,17 +1,25 @@
 build:
-	sudo docker-compose up --build -d
+	docker-compose up --build -d
+
+chrome:
+	google-chrome --incognito http://localhost:4200
+
+firefox:
+	firefox --private-window http://localhost:4200
+
+web: firefox chrome
 
 up:
-	sudo docker-compose up -d
+	docker-compose up -d
 
 clean:
-	sudo docker-compose down
+	docker-compose down
 
 cleandata:
-	sudo docker-compose down -v
+	docker-compose down -v
 
 fclean: cleandata 
-	sudo docker system prune -af
+	docker system prune -af
 
 re: clean up
 
@@ -20,4 +28,4 @@ red: cleandata up
 refd:  cleandata fclean build
 
 logs:
-	sudo docker-compose logs
+	docker-compose logs

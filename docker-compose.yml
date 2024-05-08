@@ -1,28 +1,57 @@
+version: '3.5'
+
 services:
-  
   api:
-    build:
-      context: ./back
-    image: react-flask-app-api
+    container_name: api
+    build: ./api
+    depends_on:
+      - postgres 
+    env_file:
+      - .env
+    ports:
+      - "5000:5000"
+    networks:
+      - my_network
     restart: always
     volumes:
-      - ./back:/usr/src/app
+      - ./api:/usr/src/app
       - /usr/src/app/node_modules
+
+  postgres:
+    container_name: postgres
+    image:  postgres:10.5
+    ports:
+      - "5432:5432" 
+    env_file:
+      - .env
+    volumes: 
+      - postgres:/var/lib/postgresql/data
+    networks:
+      - my_network
+    restart: always
+
+  adminer:
+    container_name: adminer
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
     networks:
       - my_network
 
-  client:
-    build:
-      context: ./front
-    image: react-flask-app-client
+  front:
+    container_name: client
+    build: ./client
+    depends_on:
+      - api 
+    networks:
+      - my_network
+    ports:
+      - 3000:3000
     restart: always
     volumes:
       - ./front:/usr/src/app
       - /usr/src/app/node_modules
-    networks:
-      - my_network
-    ports:
-      - "3000:80"
 
 volumes:
   postgres:
