@@ -9,6 +9,9 @@ firefox:
 
 web: firefox chrome
 
+down:
+	docker compose down
+
 up:
 	docker-compose up -d
 
