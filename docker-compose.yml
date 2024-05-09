@@ -27,8 +27,8 @@ services:
       - my_network
     restart: always
     volumes:
-      - ./api:/usr/src/app
-      - /usr/src/app/node_modules
+      - ./api:/app
+      - /node_modules
 
   front:
     container_name: client
@@ -41,8 +41,13 @@ services:
       - 3000:3000
     restart: always
     volumes:
-      - ./front:/usr/src/app
-      - /usr/src/app/node_modules
+      - ./client:/app
+      - /app/node_modules
+    environment:
+      - WDS_SOCKET_HOST=127.0.0.1 
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
+    command: npm run start
 
   nginx:
     image: nginx:1.15
