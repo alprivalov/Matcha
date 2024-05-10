@@ -1,9 +1,18 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import * as ReactDOM from 'react-dom/client';
 import App from './App';
 import './index.css';
 
-ReactDOM.render(
-  <App />,
-  document.getElementById('root')
-);
+const root = document.getElementById('root')
+
+const ReactRoot = ReactDOM.createRoot(root)
+ReactRoot.render(<App />,)
+// ReactDOM.render(
+//   <App />,
+//   document.getElementById('root')
+// );
+
+
+// if (import.meta.hot) {
+//   import.meta.hot.accept
+// }
